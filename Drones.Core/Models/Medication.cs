@@ -12,5 +12,7 @@ namespace Drones.Core.Models
         public string Name { get; set; }
         public double Weight { get; set; }
         string Code { get; set; }
+
+        //trying
     }
 }
