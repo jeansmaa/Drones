@@ -20,28 +20,76 @@ namespace Drones.Infrastructure.Persistence
 
         public List<Drone> CheckingAvailableDronesForLoading()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return this.airport.CheckingAvailableDronesForLoading();
+            }
+            catch
+            {
+                throw new Exception("Internal Server Issue: Airport Flow");
+            }
         }
 
         public List<Medication> CheckingLoadedMedication(int DroneId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return this.airport.CheckingLoadedMedication(DroneId);
+            }
+            catch
+            {
+                throw new Exception("Internal Server Issue: Airport Flow");
+            }
         }
 
         public int DroneBatteryLevel(int DroneId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return this.airport.DroneBatteryLevel(DroneId);
+            }
+            catch
+            {
+                throw new Exception("Internal Server Issue: Airport Flow");
+            }
+        }
+
+        public Drone GetDroneById(int DroneId)
+        {
+            try
+            {
+                return this.airport.PeekDrone(DroneId);
+            }
+            catch
+            {
+                throw new Exception("Internal Server Issue: Airport Flow");
+            }
         }
 
         public Task LoadingDrone(int DroneId, List<Medication> medications)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.airport.LoadingDrone(DroneId, medications);
+                return Task.CompletedTask;
+            }
+            catch
+            {
+                throw new Exception("Internal Server Issue: Airport Flow");
+            }
         }
 
         public Task RegisteringDrone(Drone drone)
         {
-
-            //throw new NotImplementedException();
+            try
+            {
+                this.airport.NewDrone(drone);
+                return Task.CompletedTask;
+            }
+            catch
+            {
+                throw new Exception("Internal Server Issue: Airport Flow");
+            }
         }
     }
 }
