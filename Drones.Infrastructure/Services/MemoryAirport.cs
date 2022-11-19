@@ -57,7 +57,10 @@ namespace Drones.Infrastructure.Services
             {
                 if (AvailableWeight(drone.Id) < drone.WeightLimit)
                 {
-                    available.Add(drone);
+                    if (DroneBatteryLevel(drone.Id) >= 25)
+                    {
+                        available.Add(drone);
+                    }                    
                 }
             }
             return available;
@@ -76,7 +79,10 @@ namespace Drones.Infrastructure.Services
                     {
                         if (AvailableWeight(drone.Id) >= med.Weight)
                         {
-                            drone.Medications.Add(med);
+                            if (drone.BatteryCapacity >= 25)
+                            {
+                                drone.Medications.Add(med);
+                            }                            
                         }
                         else
                         {

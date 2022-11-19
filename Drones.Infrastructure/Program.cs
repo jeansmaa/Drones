@@ -9,7 +9,7 @@ for (int i = 0; i < 4; i++)
     drone.Id = i;
     drone.Model = (Model)i;
     drone.SerialNumber = "SNumber" + i;
-    drone.BatteryCapacity = 100;
+    drone.BatteryCapacity = 30;
     drone.State = (State)i;
     drone.WeightLimit = i + 20;
     airport.NewDrone(drone);

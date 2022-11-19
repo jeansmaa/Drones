@@ -11,15 +11,37 @@ namespace Drones.Infrastructure.Persistence
 {
     public class FleetControl : IFleetControl
     {
-        public MemoryAirport memoryAirport;
+        public MemoryAirport airport;
 
         public FleetControl()
         {
-            this.memoryAirport = new MemoryAirport();
+            this.airport = new MemoryAirport();
         }
-        public Task RegisteringDrone(Drone drone)
+
+        public List<Drone> CheckingAvailableDronesForLoading()
         {
             throw new NotImplementedException();
+        }
+
+        public List<Medication> CheckingLoadedMedication(int DroneId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int DroneBatteryLevel(int DroneId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task LoadingDrone(int DroneId, List<Medication> medications)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RegisteringDrone(Drone drone)
+        {
+
+            //throw new NotImplementedException();
         }
     }
 }
