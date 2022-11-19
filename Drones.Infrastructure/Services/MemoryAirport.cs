@@ -15,11 +15,11 @@ namespace Drones.Infrastructure.Services
             this.Fleet = new List<Drone>();
         }
 
-        private int BatteryCapacity(int DroneId)
+        private int BatteryCapacity(int DroneId)//ok
         {
             return PeekDrone(DroneId).BatteryCapacity;
         }
-        private double AvailableWeight(int DroneId)
+        public double AvailableWeight(int DroneId)//ok
         {
             double weightloaded=0;
             Drone drone=PeekDrone(DroneId);
@@ -29,7 +29,7 @@ namespace Drones.Infrastructure.Services
             }
             return drone.WeightLimit - weightloaded;
         }
-        private Drone PeekDrone(int DroneId)
+        private Drone PeekDrone(int DroneId)//ok
         {
             Drone drone = new Drone();
             foreach (var item in this.Fleet)
@@ -42,7 +42,7 @@ namespace Drones.Infrastructure.Services
             }
             return drone;
         }
-        public void NewDrone(Drone drone)
+        public void NewDrone(Drone drone)//ok
         {
             this.Fleet.Add(drone);
         }
