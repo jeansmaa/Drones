@@ -54,6 +54,18 @@ namespace Drones.Infrastructure.Persistence
             }
         }
 
+        public Drone GetDroneById(int DroneId)
+        {
+            try
+            {
+                return this.airport.PeekDrone(DroneId);
+            }
+            catch
+            {
+                throw new Exception("Internal Server Issue: Airport Flow");
+            }
+        }
+
         public Task LoadingDrone(int DroneId, List<Medication> medications)
         {
             try

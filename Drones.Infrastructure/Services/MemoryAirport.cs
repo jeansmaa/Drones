@@ -13,6 +13,7 @@ namespace Drones.Infrastructure.Services
         public MemoryAirport()
         {
             this.Fleet = new List<Drone>();
+            LoadData();
         }
 
         private int BatteryCapacity(int DroneId)//ok
@@ -29,7 +30,7 @@ namespace Drones.Infrastructure.Services
             }
             return drone.WeightLimit - weightloaded;
         }
-        private Drone PeekDrone(int DroneId)//ok
+        public Drone PeekDrone(int DroneId)//ok
         {
             Drone drone = new Drone();
             foreach (var item in this.Fleet)
@@ -91,6 +92,20 @@ namespace Drones.Infrastructure.Services
                     }
                     break;
                 }
+            }
+        }
+        private void LoadData()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Drone drone = new Drone();
+                drone.Id = i;
+                drone.Model = (Model)i;
+                drone.SerialNumber = "SNumber" + i;
+                drone.BatteryCapacity = 30;
+                drone.State = (State)i;
+                drone.WeightLimit = i + 20;
+                this.Fleet.Add(drone);
             }
         }
     }

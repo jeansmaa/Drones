@@ -11,6 +11,8 @@ namespace Drones.Infrastructure.Interfaces
     {
         public Task RegisteringDrone(Drone drone);
         public Task LoadingDrone(int DroneId, List<Medication> medications);
+
+        public Drone GetDroneById(int DroneId);
         public int DroneBatteryLevel(int DroneId);
         public List<Drone> CheckingAvailableDronesForLoading();
         public List<Medication> CheckingLoadedMedication(int DroneId);

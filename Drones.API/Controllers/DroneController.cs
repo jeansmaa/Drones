@@ -1,6 +1,6 @@
 ﻿using Drones.Core.Models;
 using Microsoft.AspNetCore.Mvc;
-
+using Drones.Infrastructure.Persistence;
 
 
 namespace Drones.API.Controllers
@@ -9,23 +9,34 @@ namespace Drones.API.Controllers
     [ApiController]
     public class DroneController : Controller
     {
-        [HttpGet]
-        
-        public async Task<ActionResult<IEnumerable<Drones.Core.Models.Drone>>> Get()
+        FleetControl fleet=new FleetControl();
+        [HttpGet]        
+        public async Task<ActionResult<IEnumerable<Drone>>> Get()
         {
             try
             {
-                List<Drones.Core.Models.Drone> result = new List<Core.Models.Drone>();
-                result.Add(new Core.Models.Drone { Model = Model.Cruiserweight, State = State.LOADING, SerialNumber = "545878787SD" });
-                return Ok(result);
+                return Ok(this.fleet.airport.Fleet);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex);
             }
         }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Drone>> GetDroneById(int id)
+        {
+            try
+            {
+                return Ok(this.fleet.GetDroneById(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Drones.Core.Models.Drone drone)
+        public async Task<IActionResult> Post([FromBody] Drone drone)
         {
             if (ModelState.IsValid)
             {
