@@ -10,9 +10,11 @@ namespace Drones.Infrastructure.Services
     public class MemoryAirport
     {
         public List<Drone> Fleet { get; set; }
+        public List<Medication> MedicationStock { get; set; }
         public MemoryAirport()
         {
             this.Fleet = new List<Drone>();
+            this.MedicationStock = new List<Medication>();
             LoadData();
         }
 
@@ -102,7 +104,7 @@ namespace Drones.Infrastructure.Services
                 drone.Id = i;
                 drone.Model = (Model)i;
                 drone.SerialNumber = "SNumber" + i;
-                drone.BatteryCapacity = 30;
+                drone.BatteryCapacity = 39;
                 drone.State = (State)i;
                 drone.WeightLimit = i + 20;
                 this.Fleet.Add(drone);

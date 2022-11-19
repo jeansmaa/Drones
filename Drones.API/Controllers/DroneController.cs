@@ -1,4 +1,5 @@
 ﻿using Drones.Core.Models;
+using Drones.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Drones.Infrastructure.Persistence;
 
@@ -10,8 +11,9 @@ namespace Drones.API.Controllers
     public class DroneController : Controller
     {
         FleetControl fleet=new FleetControl();
-        [HttpGet]        
-        public async Task<ActionResult<IEnumerable<Drone>>> Get()
+        [HttpGet]
+        [Route("GetFleet")]
+        public async Task<ActionResult<IEnumerable<Drone>>> GetFleet()
         {
             try
             {
@@ -22,7 +24,8 @@ namespace Drones.API.Controllers
                 return BadRequest(ex);
             }
         }
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("GetDroneById/{id}")]
         public async Task<ActionResult<Drone>> GetDroneById(int id)
         {
             try
@@ -34,15 +37,58 @@ namespace Drones.API.Controllers
                 return BadRequest(ex);
             }
         }
-
+        
+        [HttpGet]
+        [Route("LoadedMedication/{id}")]
+        public async Task<ActionResult<Drone>> CheckingLoadedMedication(int id)
+        {
+            try
+            {
+                return Ok(this.fleet.CheckingLoadedMedication(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        
+        [HttpGet]
+        [Route("BatteryLevel/{id}")]
+        public async Task<ActionResult<Drone>> DroneBatteryLevel(int id)
+        {
+            try
+            {
+                return Ok(this.fleet.DroneBatteryLevel(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        
+        [HttpGet]
+        [Route("DronesForLoading")]
+        public async Task<ActionResult<IEnumerable<Drone>>> CheckingAvailableDronesForLoading()
+        {
+            try
+            {
+                return Ok(this.fleet.CheckingAvailableDronesForLoading());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Drone drone)
+        [Route("RegisteringDrone")]
+        public async Task<IActionResult> RegisteringDrone([FromBody] Drone drone)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    //await _mediator.Send(new ProducerCustomerCommand(customer));
+                    await this.fleet.RegisteringDrone(drone);
                     return Ok();
                 }
                 catch (Exception)
@@ -50,9 +96,28 @@ namespace Drones.API.Controllers
 
                     return BadRequest();
                 }
+            }
+            return BadRequest();
+        }
+
+        [HttpPatch]
+        [Route("LoadingDrone/{id}")]
+        public async Task<IActionResult> LoadingDrone(int id,[FromBody] List<Medication> medications)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await this.fleet.LoadingDrone(id, medications);
+                    return Ok();
+                }
+                catch (Exception)
+                {
+                    return BadRequest();
+                }
 
             }
             return BadRequest();
-        }        
+        }
     }
 }
