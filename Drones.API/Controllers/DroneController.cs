@@ -1,8 +1,8 @@
 ﻿using Drones.Core.Models;
 using Drones.Core.Services;
 using Microsoft.AspNetCore.Mvc;
+using Drones.Infrastructure.Interfaces;
 using Drones.Infrastructure.Persistence;
-
 
 namespace Drones.API.Controllers
 {
@@ -10,14 +10,19 @@ namespace Drones.API.Controllers
     [ApiController]
     public class DroneController : Controller
     {
-        FleetControl fleet=new FleetControl();
+        readonly IFleetControl fleet;
+        public DroneController(IFleetControl fleet)
+        {
+            this.fleet = fleet;
+        }
+
         [HttpGet]
         [Route("GetFleet")]
         public async Task<ActionResult<IEnumerable<Drone>>> GetFleet()
         {
             try
             {
-                return Ok(this.fleet.airport.Fleet);
+                return Ok(this.fleet.GetFleet());
             }
             catch (Exception ex)
             {
@@ -108,6 +113,16 @@ namespace Drones.API.Controllers
             {
                 try
                 {
+                    MedicationCodeAllowed medicationCodeAllowed = new MedicationCodeAllowed();
+                    MedicationNameAllowed medicationNameAllowed = new MedicationNameAllowed();
+                    foreach (Medication medic in medications)
+                    {
+                        if (!medicationCodeAllowed.Allowed(medic.Code) ||
+                            !medicationNameAllowed.Allowed(medic.Name))
+                        {
+                            return BadRequest("Error in name or code");
+                        }
+                    }
                     await this.fleet.LoadingDrone(id, medications);
                     return Ok();
                 }
