@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,8 +25,8 @@ namespace Drones.Infrastructure.Services
         }
         public double AvailableWeight(int DroneId)//ok
         {
-            double weightloaded=0;
-            Drone drone=PeekDrone(DroneId);
+            double weightloaded = 0;
+            Drone drone = PeekDrone(DroneId);
             foreach (var item in drone.Medications)
             {
                 weightloaded += item.Weight;
@@ -55,15 +56,18 @@ namespace Drones.Infrastructure.Services
         }
         public List<Drone> CheckingAvailableDronesForLoading()
         {
-            List<Drone> available=new List<Drone>();
+            List<Drone> available = new List<Drone>();
             foreach (var drone in this.Fleet)
             {
-                if (AvailableWeight(drone.Id) < drone.WeightLimit)
+                if (drone.WeightLimit == 0 ||
+                    DroneBatteryLevel(drone.Id) < 25 ||
+                    AvailableWeight(drone.Id) == 0)
                 {
-                    if (DroneBatteryLevel(drone.Id) >= 25)
-                    {
-                        available.Add(drone);
-                    }                    
+                    continue;
+                }
+                if (AvailableWeight(drone.Id) <= drone.WeightLimit)
+                {
+                    available.Add(drone);
                 }
             }
             return available;
@@ -74,22 +78,20 @@ namespace Drones.Infrastructure.Services
         }
         public void LoadingDrone(int DroneId, List<Medication> medications)
         {
+            bool full = true;
             foreach (var drone in this.Fleet)
             {
-                if (drone.Id == DroneId)
+                if (drone.Id == DroneId && drone.BatteryCapacity >= 25)
                 {
                     foreach (var med in medications)
                     {
                         if (AvailableWeight(drone.Id) >= med.Weight)
                         {
-                            if (drone.BatteryCapacity >= 25)
-                            {
-                                drone.Medications.Add(med);
-                            }                            
+                            drone.Medications.Add(med);
                         }
                         else
                         {
-                            break;
+                            throw new Exception("Some medications were not loaded");
                         }
                     }
                     break;
@@ -106,7 +108,14 @@ namespace Drones.Infrastructure.Services
                 drone.SerialNumber = "SNumber" + i;
                 drone.BatteryCapacity = 39;
                 drone.State = (State)i;
+                /*if (i == 1)
+                {
+                    drone.WeightLimit = 0;
+                }
+                else
+                {*/
                 drone.WeightLimit = i + 20;
+                //}
                 this.Fleet.Add(drone);
             }
         }

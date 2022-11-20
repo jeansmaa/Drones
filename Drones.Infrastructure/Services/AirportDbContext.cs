@@ -10,13 +10,13 @@ using Microsoft.EntityFrameworkCore;
 namespace Drones.Infrastructure.Services
 {
     public class AirportDbContext:DbContext
-    {
-        public DbSet<Drone> Drones { get; set; }
+    {       
         public AirportDbContext(DbContextOptions<AirportDbContext> options)
             : base(options)
         {
             
         }
+        public DbSet<Drone> Drones { get; set; }
     }
     
 }
