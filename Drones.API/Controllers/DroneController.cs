@@ -108,6 +108,16 @@ namespace Drones.API.Controllers
             {
                 try
                 {
+                    //MedicationCodeAllowed medicationCodeAllowed = new MedicationCodeAllowed();  
+                    //MedicationNameAllowed medicationNameAllowed=new MedicationNameAllowed();
+                    //foreach (Medication medic in medications)
+                    //{
+                    //    if (!medicationCodeAllowed.Allowed(medic.Code) ||
+                    //        !medicationNameAllowed.Allowed(medic.Name))
+                    //    {
+                    //        return BadRequest("Error in name or code");                            
+                    //    }
+                    //}
                     await this.fleet.LoadingDrone(id, medications);
                     return Ok();
                 }
