@@ -24,7 +24,7 @@ namespace Drones.Infrastructure.Persistence
             {
                 return this.airport.CheckingAvailableDronesForLoading();
             }
-            catch
+            catch (Exception)
             {
                 throw new Exception("Internal Server Issue: Airport Flow");
             }
@@ -36,7 +36,7 @@ namespace Drones.Infrastructure.Persistence
             {
                 return this.airport.CheckingLoadedMedication(DroneId);
             }
-            catch
+            catch (Exception)
             {
                 throw new Exception("Internal Server Issue: Airport Flow");
             }
@@ -48,7 +48,7 @@ namespace Drones.Infrastructure.Persistence
             {
                 return this.airport.DroneBatteryLevel(DroneId);
             }
-            catch
+            catch (Exception)
             {
                 throw new Exception("Internal Server Issue: Airport Flow");
             }
@@ -60,7 +60,7 @@ namespace Drones.Infrastructure.Persistence
             {
                 return this.airport.PeekDrone(DroneId);
             }
-            catch
+            catch (Exception)
             {
                 throw new Exception("Internal Server Issue: Airport Flow");
             }
@@ -72,7 +72,7 @@ namespace Drones.Infrastructure.Persistence
             {
                 return this.airport.Fleet;
             }
-            catch
+            catch (Exception)
             {
                 throw new Exception("Internal Server Issue: Airport Flow");
             }
@@ -85,7 +85,7 @@ namespace Drones.Infrastructure.Persistence
                 this.airport.LoadingDrone(DroneId, medications);
                 return Task.CompletedTask;
             }
-            catch
+            catch(Exception)
             {
                 throw new Exception("Internal Server Issue: Airport Flow");
             }
@@ -98,7 +98,7 @@ namespace Drones.Infrastructure.Persistence
                 this.airport.NewDrone(drone);
                 return Task.CompletedTask;
             }
-            catch
+            catch (Exception)
             {
                 throw new Exception("Internal Server Issue: Airport Flow");
             }
