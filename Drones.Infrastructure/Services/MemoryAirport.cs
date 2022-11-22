@@ -78,7 +78,6 @@ namespace Drones.Infrastructure.Services
         }
         public void LoadingDrone(int DroneId, List<Medication> medications)
         {
-            bool full = true;
             foreach (var drone in this.Fleet)
             {
                 if (drone.Id == DroneId && drone.BatteryCapacity >= 25)
@@ -100,22 +99,24 @@ namespace Drones.Infrastructure.Services
         }
         private void LoadData()
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Drone drone = new Drone();
-                drone.Id = i;
-                drone.Model = (Model)i;
-                drone.SerialNumber = "SNumber" + i;
-                drone.BatteryCapacity = 39;
-                drone.State = (State)i;
-                /*if (i == 1)
+                drone.Id = i+1;
+                if (i < 5)
                 {
-                    drone.WeightLimit = 0;
+                    drone.Model = (Model)i;
+                    drone.State = (State)i;
                 }
                 else
-                {*/
-                drone.WeightLimit = i + 20;
-                //}
+                {
+                    drone.Model = (Model)i-5;
+                    drone.State = (State)i-5;
+                }
+                drone.SerialNumber = "SNumber" + i+1;
+                drone.BatteryCapacity = 58;
+                               
+                drone.WeightLimit = i + 20;                
                 this.Fleet.Add(drone);
             }
         }
